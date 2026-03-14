@@ -1,0 +1,105 @@
+.sidebar {
+  width: 30%;
+  max-width: 360px;
+  min-width: 260px;
+  background: radial-gradient(circle at top left, rgba(15, 23, 42, 1), rgba(15, 23, 42, 0.96));
+  padding: 20px;
+  border-right: 1px solid rgba(148, 163, 184, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+
+  @media (max-width: 900px) {
+    width: 35%;
+  }
+
+  @media (max-width: 600px) {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    border-right: none;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+  }
+}
+
+.search input {
+  width: 100%;
+  padding: 0.75rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: rgba(15, 23, 42, 0.96);
+  color: #f9fafb;
+  font-size: 0.85rem;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+
+  &::placeholder {
+    color: rgba(148, 163, 184, 0.85);
+  }
+
+  &:focus {
+    border-color: #facc6b;
+    box-shadow: 0 0 0 1px rgba(250, 204, 107, 0.4);
+    background: rgba(15, 23, 42, 1);
+  }
+}
+
+.chat-list {
+  margin-top: 0.4rem;
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.55) transparent;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(#facc6b, #fbbf24);
+    border-radius: 999px;
+  }
+}
+
+.chat-item {
+  display: flex;
+  gap: 0.7rem;
+  padding: 0.65rem 0.7rem;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  align-items: center;
+  transition: background 0.16s ease, transform 0.08s ease;
+
+  &:hover {
+    background: rgba(15, 23, 42, 0.95);
+    transform: translateY(-1px);
+  }
+}
+
+.chat-item img {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 2px rgba(15, 23, 42, 1), 0 0 0 3px rgba(250, 204, 107, 0.65);
+}
+
+.chat-item h4 {
+  margin: 0 0 0.1rem;
+  font-size: 0.92rem;
+  font-weight: 550;
+}
+
+.chat-item p {
+  margin: 0;
+  font-size: 0.78rem;
+  color: #9ca3af;
+}
+
+.chat-item img {
+  border-radius: 50%;
+}

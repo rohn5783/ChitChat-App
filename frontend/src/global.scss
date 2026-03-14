@@ -1,0 +1,302 @@
+// Color system
+$bg-gradient: radial-gradient(circle at top left, #0b1020 0, #05060b 45%, #020308 100%);
+$card-bg: #080b16;
+$card-border: rgba(255, 255, 255, 0.04);
+$accent: #facc6b;
+$accent-soft: rgba(250, 204, 107, 0.12);
+$accent-strong: #fbbf24;
+$text-main: #f9fafb;
+$text-muted: #9ca3af;
+$danger: #f97373;
+$success: #4ade80;
+
+$shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.75);
+
+// Layout tokens
+$radius-lg: 1.5rem;
+$radius-md: 0.85rem;
+$radius-full: 999px;
+
+$break-md: 900px;
+$break-sm: 600px;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter",
+    "Segoe UI", sans-serif;
+  background: $bg-gradient;
+  color: $text-main;
+}
+
+button,
+input {
+  font-family: inherit;
+}
+
+// Fullscreen page shell used by auth/profile/chat pages
+.page-shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1.25rem;
+  background: $bg-gradient;
+}
+
+@media (max-width: $break-sm) {
+  .page-shell {
+    padding: 1.75rem 1rem;
+  }
+}
+
+// Glass card used across UI
+.glass-card {
+  width: 100%;
+  max-width: 420px;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.94), rgba(2, 6, 23, 0.96));
+  border-radius: $radius-lg;
+  padding: 2.25rem 2rem 2rem;
+  border: 1px solid $card-border;
+  box-shadow: $shadow-soft;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+@media (max-width: $break-sm) {
+  .glass-card {
+    padding: 1.9rem 1.5rem 1.6rem;
+  }
+}
+
+.glass-card__header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.8rem;
+}
+
+.glass-card__title {
+  font-size: 1.7rem;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+}
+
+.glass-card__subtitle {
+  font-size: 0.9rem;
+  color: $text-muted;
+}
+
+.glass-card__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.22rem 0.65rem;
+  border-radius: $radius-full;
+  background: $accent-soft;
+  color: $accent-strong;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+// Input group
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.field-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.field-label {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: $text-muted;
+}
+
+.field-helper {
+  font-size: 0.75rem;
+  color: $text-muted;
+}
+
+.field-input {
+  width: 100%;
+  padding: 0.9rem 0.95rem;
+  border-radius: $radius-md;
+  border: 1px solid rgba(148, 163, 184, 0.45);
+  background: rgba(15, 23, 42, 0.95);
+  color: $text-main;
+  outline: none;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease,
+    transform 0.06s ease;
+
+  &::placeholder {
+    color: rgba(148, 163, 184, 0.9);
+  }
+
+  &:focus {
+    border-color: $accent;
+    box-shadow: 0 0 0 1px rgba(250, 204, 107, 0.4);
+    background: rgba(15, 23, 42, 1);
+    transform: translateY(-0.5px);
+  }
+}
+
+// Primary button
+.btn-primary {
+  width: 100%;
+  margin-top: 0.6rem;
+  padding: 0.85rem 1rem;
+  border-radius: $radius-md;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, $accent, $accent-strong);
+  color: #111827;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  box-shadow: 0 12px 28px rgba(250, 204, 107, 0.35);
+  transition: transform 0.1s ease, box-shadow 0.16s ease, filter 0.12s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 18px 40px rgba(250, 204, 107, 0.4);
+    filter: brightness(1.05);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 10px 24px rgba(250, 204, 107, 0.3);
+    filter: brightness(0.97);
+  }
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.55rem 0.95rem;
+  border-radius: $radius-full;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  background: rgba(15, 23, 42, 0.85);
+  color: $text-main;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.08s ease,
+    color 0.15s ease;
+
+  &:hover {
+    background: rgba(15, 23, 42, 1);
+    border-color: $accent;
+    color: $accent;
+    transform: translateY(-0.5px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.inline-link {
+  color: $accent;
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.12s ease, text-shadow 0.12s ease;
+
+  &:hover {
+    color: $accent-strong;
+    text-shadow: 0 0 18px rgba(250, 204, 107, 0.5);
+  }
+}
+
+.muted-text {
+  color: $text-muted;
+  font-size: 0.85rem;
+}
+
+// Chat app shell
+.chat-shell {
+  width: 100%;
+  max-width: 1180px;
+  height: min(720px, calc(100vh - 3.5rem));
+  display: flex;
+  border-radius: $radius-lg;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.94), rgba(15, 23, 42, 0.98));
+  border: 1px solid $card-border;
+  box-shadow: $shadow-soft;
+  overflow: hidden;
+}
+
+@media (max-width: $break-md) {
+  .chat-shell {
+    height: calc(100vh - 2.8rem);
+    max-width: 100%;
+    border-radius: 1rem;
+  }
+}
+
+@media (max-width: $break-sm) {
+  .chat-shell {
+    flex-direction: column;
+    height: calc(100vh - 2.2rem);
+    border-radius: 0.75rem;
+  }
+}
+
+// Utility: hides scrollbars but keeps scrolling
+.scroll-y-soft {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.55) transparent;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient($accent, $accent-strong);
+    border-radius: 999px;
+  }
+}
+
+// Simple fade-in animation for main surfaces
+.fade-in {
+  animation: fadeInScale 260ms ease-out forwards;
+  opacity: 0;
+  transform: translateY(8px) scale(0.99);
+}
+
+@keyframes fadeInScale {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
