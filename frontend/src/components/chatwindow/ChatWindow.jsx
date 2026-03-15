@@ -1,10 +1,16 @@
 import React from "react";
+import { motion } from "framer-motion";
 import MessageBubble from "../messagebubble/MessageBubble";
 import "../chatwindow/chatwindow.scss";
 
 const ChatWindow = () => {
   return (
-    <div className="chat-window">
+    <motion.div
+      className="chat-window"
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.45, ease: "easeOut" }}
+    >
       <div className="chat-header">
         <h3>Ram Kumar</h3>
         <span className="status-pill">Online</span>
@@ -20,7 +26,7 @@ const ChatWindow = () => {
         <button>Send</button>
       </div>
 
-    </div>
+    </motion.div>
   );
 };
 

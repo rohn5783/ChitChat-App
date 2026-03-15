@@ -1,10 +1,16 @@
 import React from "react";
+import { motion } from "framer-motion";
 import "./notfound.scss";
 
 const NotFound = () => {
   return (
     <div className="notfound-page">
-      <div className="notfound-card">
+      <motion.div
+        className="notfound-card"
+        initial={{ opacity: 0, y: 22 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+      >
         <div className="notfound-glow" />
         <p className="notfound-kicker">Oops, nothing here</p>
         <h1 className="notfound-title">404</h1>
@@ -20,7 +26,7 @@ const NotFound = () => {
             Open chat
           </a>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

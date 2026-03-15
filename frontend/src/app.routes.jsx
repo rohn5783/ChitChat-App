@@ -5,11 +5,12 @@ import Register from "../src/pages/register/Register";
 import Profile from "../src/pages/profile/Profile";
 import Chat from "../src/pages/chat/Chat";
 import NotFound from "../src/pages/notfound/NotFound";
+import Landing from "../src/pages/landing/Landing";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Login />,
+    element: <Landing />,
   },
   {
     path: "/login",

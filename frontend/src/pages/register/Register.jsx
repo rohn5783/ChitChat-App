@@ -1,5 +1,6 @@
 import { Eye, EyeOff } from "lucide-react";
 import React from "react";
+import { motion } from "framer-motion";
 import { useAuth } from "../../auth/hooks/useAuth";
 import "../register/register.scss";
 
@@ -27,7 +28,12 @@ const Register = () => {
 
   return (
     <div className="register-page">
-      <div className="register-box fade-in">
+      <motion.div
+        className="register-box fade-in"
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.55, ease: "easeOut" }}
+      >
         <div className="register-header">
           <div className="register-badge">Get started</div>
           <h2 className="register-title">Create your space</h2>
@@ -137,7 +143,7 @@ const Register = () => {
             <a className="link" href="/">Sign in</a>
           </p>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../../components/sidebar/SideBar";
 import ChatWindow from "../../components/chatwindow/ChatWindow";
@@ -9,7 +10,12 @@ const Chat = () => {
 
   return (
     <div className="chat-page">
-      <div className="container">
+      <motion.div
+        className="container"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+      >
         <Sidebar className="chat-sidebar" />
         <ChatWindow className="chat-window" />
         
@@ -20,7 +26,7 @@ const Chat = () => {
         >
           &larr; Back to Profile
         </button>
-      </div>
+      </motion.div>
     </div>
   );
 };

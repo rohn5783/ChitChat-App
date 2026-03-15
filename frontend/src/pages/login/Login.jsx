@@ -1,5 +1,6 @@
 import { Eye, EyeOff } from "lucide-react";
 import React from "react";
+import { motion } from "framer-motion";
 import { useAuth } from "../../auth/hooks/useAuth";
 import "../login/login.scss";
 
@@ -27,7 +28,12 @@ const Login = () => {
 
   return (
     <div className="auth-page">
-      <div className="auth-box fade-in">
+      <motion.div
+        className="auth-box fade-in"
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.55, ease: "easeOut" }}
+      >
         <div className="auth-header">
           <span className="glass-card__badge">Welcome back</span>
           <h2 className="auth-title">Sign in to ChitChat</h2>
@@ -123,7 +129,7 @@ const Login = () => {
           </div>
           <p className="auth-small-text">Forgot password? It’s coming soon.</p>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
