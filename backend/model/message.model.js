@@ -1,5 +1,3 @@
-import mongoose from "mongoose";
-
 const messageSchema = new mongoose.Schema(
   {
     sender: {
@@ -29,9 +27,13 @@ const messageSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
       }
-    ]
+    ],
+
+    isDeleted: {
+      type: Boolean,
+      default: false
+    }
+
   },
   { timestamps: true }
 );
-
-export default mongoose.model("Message", messageSchema);

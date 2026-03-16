@@ -3,7 +3,9 @@ import User from "../model/user.model.js";
 import PendingUser from "../model/pendingUser.model.js";
 import bcrypt from "bcryptjs";
 import { sendEmailOTP } from "../utils/email.js";
+import imagekit from "../config/ImageKit.js";
 
+//  genarating teoken
 const generateTokenAndSetCookie = (userId, res) => {
     const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
         expiresIn: "15d",
@@ -20,7 +22,7 @@ const generateTokenAndSetCookie = (userId, res) => {
 };
 
 const generateOTP = () => Math.floor(100000 + Math.random() * 900000).toString();
-
+//  register user
 async function createUser(req, res) {
     try {
         const { name, email, password } = req.body;
@@ -173,7 +175,7 @@ async function verifyEmailOtp(req, res) {
             _id: user._id,
             name: user.name,
             email: user.email,
-            avatar: user.avatar,
+            profilePic: user.profilePic,
             token
         });
 
@@ -202,10 +204,51 @@ async function checkAuth(req, res) {
     }
 }
 
+//  update profile
+
+
+const updateProfile = async (req, res) => {
+  try {
+    let profilePicUrl = "";
+
+    if (req.file) {
+      const result = await imagekit.upload({
+        file: req.file.buffer,
+        fileName: Date.now() + "-" + req.file.originalname,
+        folder: "/profilePics"
+      });
+
+      profilePicUrl = result.url;
+    }
+
+    const user = await User.findByIdAndUpdate(
+      req.user.id,
+      {
+        name: req.body.name,
+        bio: req.body.bio,
+        profilePic: profilePicUrl
+      },
+      { new: true }
+    );
+
+    res.json({
+      message: "Profile updated",
+      user
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Profile update failed"
+    });
+  }
+};
+
 export default {
     createUser,
     loginUser,
     verifyEmailOtp,
     logoutUser,
-    checkAuth
+    checkAuth,
+    updateProfile
 };
