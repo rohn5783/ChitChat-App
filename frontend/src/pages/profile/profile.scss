@@ -174,7 +174,18 @@ button:first-of-type {
     transform: translateY(-2px);
   }
 }
+.profile-pic-section img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
 
+  transition: transform 0.3s ease;
+}
+
+.profile-pic-section img:hover {
+  transform: scale(1.05);
+}
 .logout-btn {
   background: rgba(255, 255, 255, 0.12);
   color: #f87171;

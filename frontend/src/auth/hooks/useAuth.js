@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { login, register, verifyOtp, getCurrentUser } from "../../services/auth.api";
+import { login, register, verifyOtp } from "../../services/auth.api";
 import { useNavigate } from "react-router-dom";
 
 export const useAuth = () => {
@@ -19,15 +19,30 @@ export const useAuth = () => {
 
   const navigate = useNavigate();
 
-  const togglePassword = () => setShowPassword(!showPassword);
-  const toggleOtp = () => setShowOtp(!showOtp);
+  /* ---------- TOGGLE PASSWORD ---------- */
+
+  const togglePassword = () => {
+    setShowPassword(prev => !prev);
+  };
+
+  const toggleOtp = () => {
+    setShowOtp(prev => !prev);
+  };
+
+  /* ---------- INPUT CHANGE ---------- */
 
   const handleChange = (e) => {
-    setFormData((prev) => ({
+
+    const { name, value } = e.target;
+
+    setFormData(prev => ({
       ...prev,
-      [e.target.name]: e.target.value
+      [name]: value
     }));
+
   };
+
+  /* ---------- LOGIN / REGISTER ---------- */
 
   const handleAuthAction = async (actionType) => {
 
@@ -36,68 +51,89 @@ export const useAuth = () => {
     try {
 
       if (actionType === "login") {
+
         await login({
           email: formData.email,
           password: formData.password
         });
+
       }
 
       if (actionType === "register") {
+
         await register(formData);
+
       }
 
+      // OTP SENT
       setIsOtpSent(true);
 
     } catch (error) {
 
       setErrorMsg(
-        error.response?.data?.message ||
-          `${actionType === "login" ? "Login" : "Registration"} failed`
+        error?.message ||
+        `${actionType === "login" ? "Login" : "Registration"} failed`
       );
 
     }
+
   };
+
+  /* ---------- VERIFY OTP ---------- */
 
   const handleVerifyOtp = async (e) => {
 
     e.preventDefault();
+
     setErrorMsg("");
 
     try {
 
-      await verifyOtp({
+      const data = await verifyOtp({
         email: formData.email,
         otp
       });
 
       setIsVerified(true);
 
-      // ✅ LOGIN STATE
+      // LOGIN STATE
       localStorage.setItem("isLoggedIn", "true");
 
-      // ✅ FETCH USER DATA
-      const user = await getCurrentUser();
+      // SAVE USER
+      localStorage.setItem(
+        "user",
+        JSON.stringify(data.user)
+      );
 
-      // ✅ SAVE USER
-      localStorage.setItem("user", JSON.stringify(user));
+      // SAVE profileCompleted FLAG SEPARATELY
+      localStorage.setItem(
+        "profileCompleted",
+        data?.user?.profileCompleted ? "true" : "false"
+      );
 
-      setTimeout(() => {
+      // REDIRECT
+      if (data?.user?.profileCompleted) {
 
-        // redirect to profile setup
-        navigate("/profile");
+        navigate("/chat", { replace: true });
 
-      }, 1500);
+      } else {
+
+        navigate("/profile", { replace: true });
+
+      }
 
     } catch (error) {
 
       setErrorMsg(
-        error.response?.data?.message || "Invalid OTP"
+        error?.message || "Invalid OTP"
       );
 
     }
+
   };
 
   return {
+
     formData,
     otp,
     setOtp,
@@ -111,5 +147,7 @@ export const useAuth = () => {
     showOtp,
     togglePassword,
     toggleOtp
+
   };
+
 };

@@ -5,21 +5,21 @@ import upload from "../middleware/updateProfile.middleware.js";
 
 const userRouter = express.Router();
 
-// auth routes
+// AUTH ROUTES
 userRouter.post("/register", userController.createUser);
 userRouter.post("/login", userController.loginUser);
 userRouter.post("/verify-otp", userController.verifyEmailOtp);
 userRouter.post("/logout", userController.logoutUser);
 
-// profile update
+// CHECK CURRENT USER
+userRouter.get("/me", protectRoute, userController.checkAuth);
+
+// UPDATE PROFILE
 userRouter.patch(
   "/update-profile",
   protectRoute,
   upload.single("profilePic"),
   userController.updateProfile
 );
-
-// check auth
-userRouter.get("/check", protectRoute, userController.checkAuth);
 
 export default userRouter;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { logout, getCurrentUser } from "../../services/auth.api";
 import { updateProfile } from "../../services/profile.api";
@@ -15,6 +15,24 @@ const Profile = () => {
   });
 
   const [preview, setPreview] = useState("https://i.pravatar.cc/100");
+
+  // Pre-fill form with stored user data (for editing existing profile)
+  useEffect(() => {
+    const stored = localStorage.getItem("user");
+    if (stored) {
+      try {
+        const user = JSON.parse(stored);
+        setFormData((prev) => ({
+          ...prev,
+          name: user.name || "",
+          bio: user.bio || "",
+        }));
+        if (user.profilePic) setPreview(user.profilePic);
+      } catch (error) {
+        console.error("Error parsing user:", error);
+      }
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -40,6 +58,7 @@ const Profile = () => {
   const handleSaveProfile = async () => {
     try {
       const data = new FormData();
+
       data.append("name", formData.name);
       data.append("bio", formData.bio);
 
@@ -50,10 +69,14 @@ const Profile = () => {
       await updateProfile(data);
 
       const user = await getCurrentUser();
+
       localStorage.setItem("user", JSON.stringify(user));
 
-      alert("Profile Updated Successfully");
-      navigate("/chat");
+      // ✅ profile completed flag
+      localStorage.setItem("profileCompleted", "true");
+
+      navigate("/chat", { replace: true });
+
     } catch (error) {
       console.error("Profile update failed:", error);
     }
@@ -63,8 +86,7 @@ const Profile = () => {
     try {
       await logout();
 
-      localStorage.removeItem("isLoggedIn");
-      localStorage.removeItem("user");
+      localStorage.clear();
 
       navigate("/");
     } catch (error) {
@@ -78,7 +100,6 @@ const Profile = () => {
         className="profile-card"
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
       >
         <h2>Setup Your Profile</h2>
 
